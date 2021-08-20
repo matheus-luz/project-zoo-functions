@@ -1,6 +1,7 @@
-const { species } = require('./data');
+const { species, employees } = require('./data');
 const data = require('./data');
 
+// Documentação - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 function getSpeciesByIds(...ids) {
   return species.filter(({ id }) => ids.includes(id));
 }
@@ -9,8 +10,12 @@ function getAnimalsOlderThan(animal, idade) {
   // seu código aqui
 }
 
-function getEmployeeByName(employeeName) {
-  // seu código aqui
+function getEmployeeByName(names) {
+  if (names === undefined) {
+    return {};
+  }
+  return employees.filter(({ firstName, lastName }) => firstName === names || lastName === names)
+    .find((fullName) => fullName);
 }
 
 function createEmployee(personalInfo, associatedWith) {
