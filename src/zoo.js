@@ -7,7 +7,8 @@ function getSpeciesByIds(...ids) {
 }
 
 function getAnimalsOlderThan(animal, idade) {
-  // seu código aqui
+  return species.find((animals) => animals.name === animal)
+    .residents.every((oldAge) => oldAge.age >= idade);
 }
 
 function getEmployeeByName(names) {
@@ -23,7 +24,10 @@ function createEmployee(personalInfo, associatedWith) {
 }
 
 function isManager(id) {
-  // seu código aqui
+/*
+  return employees.filter(({ managers}) => managers
+  .some((name) => name === id))
+*/
 }
 
 function addEmployee(id, firstName, lastName, managers, responsibleFor) {
