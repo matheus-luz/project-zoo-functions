@@ -24,15 +24,13 @@ function createEmployee(personalInfo, associatedWith) {
 }
 
 function isManager(id) {
-/*
-  return employees.filter(({ managers}) => managers
-  .some((name) => name === id))
-*/
+  return employees.some(({ managers }) => managers.includes(id));
 }
 
 function addEmployee(id, firstName, lastName, managers, responsibleFor) {
   // seu código aqui
 }
+
 
 function countAnimals() {
   // seu código aqui
