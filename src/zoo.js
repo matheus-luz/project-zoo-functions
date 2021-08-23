@@ -1,4 +1,4 @@
-const { species, employees } = require('./data');
+const { species, employees, prices } = require('./data');
 const data = require('./data');
 
 // Documentação - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
@@ -49,7 +49,15 @@ function countAnimals(animais) {
 }
 
 function calculateEntry(entrants) {
-  // seu código aqui
+  if (entrants === undefined) {
+    return 0;
+  }
+  const { Adult = 0, Senior = 0, Child = 0 } = entrants;
+
+  const adultTicket = Adult * prices.Adult;
+  const oldTicket = Senior * prices.Senior;
+  const kidsTicket = Child * prices.Child;
+  return adultTicket + oldTicket + kidsTicket;
 }
 
 function getAnimalMap(options) {
