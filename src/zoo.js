@@ -1,4 +1,4 @@
-const { species, employees } = require('./data');
+const { species, employees, prices } = require('./data');
 const data = require('./data');
 
 // Documentação - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
@@ -37,8 +37,15 @@ function addEmployee(id, firstName, lastName, managers = [], responsibleFor = []
   });
 }
 
-function countAnimals() {
-  // seu código aqui
+function countAnimals(animais) {
+ if (animais === undefined) {
+   const objetoBichos = {};
+    species.forEach((element) => {
+   objetoBichos[element.name] = element.residents.length;
+    })
+    return objetoBichos;
+ }
+ return species.find(({ name }) => name === animais).residents.length;
 }
 
 function calculateEntry(entrants) {
