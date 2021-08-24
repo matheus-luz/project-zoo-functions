@@ -1,4 +1,4 @@
-const { species, employees, prices } = require('./data');
+const { species, employees, prices, hours } = require('./data');
 const data = require('./data');
 
 // Documentação - https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
@@ -65,15 +65,31 @@ function getAnimalMap(options) {
 }
 
 function getSchedule(dayName) {
-  // seu código aqui
+  const daysList = Object.entries(hours);
+  const cronograma = {};
+  daysList.forEach(([chave, valor]) => {
+    const { open, close } = valor;
+    if (dayName === chave || !dayName) {
+      cronograma[chave] = (open === 0 && close === 0)
+        ? 'CLOSED'
+        : `Open from ${open}am until ${close - 12}pm`;
+    }
+  });
+  return cronograma;
 }
 
-function getOldestFromFirstSpecies(id) {
-  // seu código aqui
+function getOldestFromFirstSpecies(ids) {
+  const employeesName = employees.find(({ id }) => id === ids);
+  const speciesName = employeesName.responsibleFor[0];
+  const speciesAnimal = species.find(({ id }) => id === speciesName);
+  return speciesAnimal;
 }
 
 function increasePrices(percentage) {
-  // seu código aqui
+  prices.Adult = (((percentage / 100) * 49.99) + 49.998).toFixed(2);
+  prices.Senior = (((percentage / 100) * 24.99) + 24.998).toPrecision(4);
+  prices.Child = (((percentage / 100) * 20.99) + 20.998).toPrecision(4);
+  return prices;
 }
 
 function getEmployeeCoverage(idOrName) {
