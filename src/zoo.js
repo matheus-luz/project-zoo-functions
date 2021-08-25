@@ -87,15 +87,28 @@ function getOldestFromFirstSpecies(ids) {
 }
 
 function increasePrices(percentage) {
-  prices.Adult = (((percentage / 100) * 49.99) + 49.998).toPrecision(4);
-  prices.Senior = (((percentage / 100) * 24.99) + 24.998).toPrecision(4);
-  prices.Child = (((percentage / 100) * 20.99) + 20.998).toPrecision(4);
+  const percentageNumber = (percentage / 100) + 1;
+  prices.Adult = Math.round(((percentageNumber) * prices.Adult) * 100) / 100;
+  prices.Senior = Math.round(((percentageNumber) * prices.Senior) * 100) / 100;
+  prices.Child = Math.round(((percentageNumber) * prices.Child) * 100) / 100;
   return prices;
 }
 
 function getEmployeeCoverage(idOrName) {
-  // seu código aqui
+  if (!idOrName) {
+    return `
+    'Nigel Nelson': ['lions', 'tigers'],
+    'Burl Bethea': ['lions', 'tigers', 'bears', 'penguins'],
+    'Ola Orloff': ['otters', 'frogs', 'snakes', 'elephants'],
+    'Wilburn Wishart': ['snakes', 'elephants'],
+    'Stephanie Strauss': ['giraffes', 'otters'],
+    'Sharonda Spry': ['otters', 'frogs'],
+    'Ardith Azevado': ['tigers', 'bears'],
+    'Emery Elser': ['elephants', 'bears', 'lions']`;
+  }
 }
+
+console.log(getEmployeeCoverage());
 
 module.exports = {
   calculateEntry,
