@@ -81,12 +81,13 @@ function getSchedule(dayName) {
 function getOldestFromFirstSpecies(ids) {
   const employeesName = employees.find(({ id }) => id === ids);
   const speciesName = employeesName.responsibleFor[0];
-  const speciesAnimal = species.find(({ id }) => id === speciesName);
-  return speciesAnimal;
+  const speciesGeneration = species.find(({ id }) => id === speciesName).residents;
+  const oldSpecies = speciesGeneration.reduce((acc, curr) => (acc.age > curr.age ? acc : curr));
+  return Object.values(oldSpecies);
 }
 
 function increasePrices(percentage) {
-  prices.Adult = (((percentage / 100) * 49.99) + 49.998).toFixed(2);
+  prices.Adult = (((percentage / 100) * 49.99) + 49.998).toPrecision(4);
   prices.Senior = (((percentage / 100) * 24.99) + 24.998).toPrecision(4);
   prices.Child = (((percentage / 100) * 20.99) + 20.998).toPrecision(4);
   return prices;
