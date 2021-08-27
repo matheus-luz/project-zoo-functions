@@ -94,21 +94,34 @@ function increasePrices(percentage) {
   return prices;
 }
 
-function getEmployeeCoverage(idOrName) {
-  if (!idOrName) {
-    return `
-    'Nigel Nelson': ['lions', 'tigers'],
-    'Burl Bethea': ['lions', 'tigers', 'bears', 'penguins'],
-    'Ola Orloff': ['otters', 'frogs', 'snakes', 'elephants'],
-    'Wilburn Wishart': ['snakes', 'elephants'],
-    'Stephanie Strauss': ['giraffes', 'otters'],
-    'Sharonda Spry': ['otters', 'frogs'],
-    'Ardith Azevado': ['tigers', 'bears'],
-    'Emery Elser': ['elephants', 'bears', 'lions']`;
-  }
+function fullNameSpecies(idOrName) {
+  const discripitionPerson = employees.find((person) => person.firstName === idOrName
+    || person.id === idOrName || person.lastName === idOrName);
+  const animalDescripition = employees
+    .filter((animals) => discripitionPerson.responsibleFor === animals.responsibleFor);
+  const animalId = animalDescripition.map((nameBicho) => nameBicho.responsibleFor);
+  const animalSpecies = animalId[0].map((animalBicho) => species
+    .filter((bichos) => bichos.id === animalBicho));
+  const nameAnimais = animalSpecies.map((bichos) => bichos[0].name);
+  const table = {};
+  const information = `${discripitionPerson.firstName} ${discripitionPerson.lastName}`;
+  table[information] = nameAnimais;
+  return table;
 }
 
-console.log(getEmployeeCoverage());
+function getEmployeeCoverage(idOrName) {
+  if (!idOrName) {
+    return employees.reduce((acc, curr) => {
+      const fullName = `${curr.firstName} ${curr.lastName}`;
+      const nameAnimal = curr.responsibleFor.map((animal) => species
+        .find((bicho) => bicho.id === animal));
+      const animalSpecies = nameAnimal.map((nameBicho) => nameBicho.name);
+      acc[fullName] = animalSpecies;
+      return acc;
+    }, {});
+  }
+  return fullNameSpecies(idOrName);
+}
 
 module.exports = {
   calculateEntry,
